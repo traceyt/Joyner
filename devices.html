@@ -1,113 +1,207 @@
 ﻿<!DOCTYPE html>
-<html ng-app="AllJoynApp">
-
+<html ng-app="demoApp">
 <head>
-  <title>Lesson</title>
-  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .card: hover {
+      -webkit-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
+      -moz-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
+      box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
+    }
+
+    .btn {
+      border-radius: 0px;
+    }
+
+    .navbar-brand {
+      margin-top: -3px;
+    }
+  </style>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" data-require="bootstrap-css@3.1.1" data-semver="3.1.1" />
 </head>
 
-<body ng-controller="AllJoynController">
-
-
-  <div class="well" ng-hide="showDetail">
-    Sort
-    <button class="btn btn-default" ng-click="sortButtonClick('dname')">
-      Name
-      <span ng-show="sortField=='dname'">{{(sortAscending)?'+':'-'}}</span>
-    </button>
-    <button class="btn btn-default" ng-click="sortButtonClick('time')">
-      Time
-      <span ng-show="sortField=='time'">{{(sortAscending)?'+':'-'}}</span>
-    </button>
-    Search
-    <input type="text" class="btn" ng-model="filterText" placeholder="" />
-    Add<button class="btn btn-default" ng-click="addButtonClick()">New</button>
-  </div>
-
-  <div class="container" ng-hide="showDetail">
-    <div ng-container class="row">
-      <div ng-repeat="device in devices | filter:filterText | orderBy:sort">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="panel panel-default" ng-click="editDevice(device)">
-            <div class="panel-heading">{{ device.dname }}</div>
-            <div class="panel-body"> {{ device.sname }}: {{ device.value }}</div>
+<body ng-controller="demoController">
+  <div ng-show="menu == 'main'">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Contact Cards</a>
+          <button id="button-nav-group" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <div>
+              <div class="btn-group">
+                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending" btn-radio="'address1'">
+                  City
+                  <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='address1' && ascending"></i>
+                  <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='address1' && !ascending"></i>
+                </label>
+                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending" btn-radio="'firstname'">
+                  First Name
+                  <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='firstname' && ascending"></i>
+                  <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='firstname' && !ascending"></i>
+                </label>
+                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; currentColumn = 2" btn-radio="'lastname'">
+                  Last Name
+                  <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='lastname' && ascending"></i>
+                  <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='lastname' && !ascending"></i>
+                </label>
+                <label class="btn btn-lg" ng-click="menu = 'add'">Add</label>
+              </div>
+            </div>
+          </ul>
+          <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+            </div>
+          </form>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+    <!-- <p>This lesson shows the use of the Angular Cloud Data Connector. It loads property information from Windows Azure Mobile Services.</p> -->
+    <div ng-container>
+      <div class="row">
+        <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort">
+          <div class="col-sm-6 col-md-4 col-lg-2" ng-click="Edit(person)">
+            <div class="panel panel-default card">
+              <div class="panel-heading">{{ device.dname }} </div>
+              <div class="panel-body">{{ device.sname }} {{ device.lastname }}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="container" ng-show="showDetail">
-    <input type="text" class="form-control" ng-model="detailDevice.dname" placeholder="Device Name" />
-    <input type="text" class="form-control" ng-model="detailDevice.sname" placeholder="Sensor Name" />
-    <input type="text" class="form-control" ng-model="detailDevice.value" placeholder="Value" />
-        <button class="btn" ng-show="detailDevice.id == null" ng-click="addDevice(detailDevice)">Add</button>
-    <button class="btn" ng-show="detailDevice.id != null" ng-click="updateDevice(detailDevice)">Update</button>
-    <button class="btn" ng-show="detailDevice.id != null" ng-click="deleteDevice(detailDevice)">Delete</button>
-    <button class="btn" ng-click="cancelDetail()">Cancel</button>
+  <div ng-show="menu == 'edit'">
+    <div class="well form-horizontal">
+      <input  type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
+      <input  type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
+      <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />
+      <button class="btn btn-default" ng-click="Change('devices', currentEdit)">Change</button>
+      <button class="btn btn-default" ng-click="Delete('devices', currentEdit)">Delete</button>
+      <button class="btn btn-default" ng-click="menu = 'main'; currentEdit={}">Cancel</button>
+    </div>
+  </div>
+  <div ng-show="menu == 'add'">
+    <div class="well form-horizontal">
+      <legend>Add Person</legend>
+      <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
+      <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
+      <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />      <button class="btn btn-default" ng-click="Add('devices', currentEdit)">Add</button>
+      <button class="btn btn-default" ng-click="menu = 'main'">Cancel</button>
+    </div>
   </div>
 
-  <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
-  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+  <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+  <script src="https://code.jquery.com/jquery-2.0.3.min.js" data-require="jquery@*" data-semver="2.0.3"></script>
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@3.1.1" data-semver="3.1.1"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js" data-require="angular.js@1.2.17" data-semver="1.2.17"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.1.0.min.js"></script>
+  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.3/AngularCloudDataConnector.js"></script>
+  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.3/Providers/AzureService.js"></script>
 
   <script>
-    var app = angular.module('AllJoynApp', []);
-    app.controller('AllJoynController', function ($scope) {
-      $scope.devices = [{
-        'id' : 0,
-        'dname': 'Water Heater 1',
-        'value': 100,
-        'sname': 'Temperature 1'
-      }, {
-        'id': 1,
-        'dname': 'Water Heater 2',
-        'value': 102,
-        'sname': 'Temperature 1'
-      }];
+        var app = angular.module('demoApp', ['DataModule', 'AzureDataModule', 'ui.bootstrap']);
+        app.controller('demoController', ['$scope', 'dataService', 'azureDataService',
+          function ($scope, dataService, azureDataService) {
+              //define global scope variables
+              $scope.sortField = 'dname';
+              $scope.ascending = true;
+              $scope.currentColumn = 0;
+              $scope.menu = "main";
 
-      $scope.devices._idGenerator = $scope.devices.length;
+              $scope.Delete = function (tableName, entity) {
+                  dataService.remove(tableName, entity, function () {
+                      //updates the data after you add data
+                      $scope.sync();
+                  }, function () {
+                      console.log('Problem removing the data.')
+                  });
 
-      // sort, sortField, sortAscending, sortButtonClick(field)
-      $scope.$watch('sortField', function () {
-        $scope.sortAscending = true;
-      });
-      $scope.$watch('sortField+sortAscending', function () {
-        $scope.sort = (($scope.sortAscending) ? "+" : "-") + $scope.sortField;
-      });
+                  $scope.menu = "main";
+                  $scope.currentEdit = {};
+              };
 
-      $scope.sortField = "dname";
+              //function to add a new data entry
+              $scope.Add = function (tableName, entity) {
+                  dataService.add(tableName, entity, function () {
+                      //updates the data after you add data
+                      $scope.sync();
+                  }, function () {
+                      console.log('Problem adding data.')
+                  });
 
-      $scope.sortButtonClick = function (field) {
-        $scope.sortField = field;
-        $scope.sortAscending = !$scope.sortAscending;
-      };
+                  $scope.menu = "main";
+                  $scope.currentEdit = {};
+              };
 
-      // showDetail, detailPerson, editPerson(person)
-      $scope.addButtonClick = function () { $scope.detailDevice = {}; $scope.showDetail = true; };
-      $scope.editDevice = function (device) { $scope.detailDevice = JSON.parse(JSON.stringify(device)); $scope.showDetail = true; };
-      $scope.addDevice = function (device) {
-        device.id = $scope.device._idGenerator++;
-        $scope.devices.push(device);
-        $scope.cancelDetail();
-      };
-      $scope.deleteDevice = function (device) {
-        for (var i = 0; i < $scope.devices.length; i++) {
-          if ($scope.devices[i].id == device.id) { $scope.devices.splice(i, 1); break; }
-        }
-        $scope.cancelDetail();
-      };
-      $scope.updateDevice = function (device) {
-        for (var i = 0; i < $scope.devices.length; i++) {
-          if ($scope.devices[i].id == device.id) {
-            $scope.devices[i] = device;
-            break;
+              $scope.Change = function (tableName, entity) {
+                  dataService.update(tableName, entity, function () {
+                      $scope.sync();
+                  }, function () {
+                      console.log('Problem updating data.')
+                  });
+                  $scope.menu = "main";
+                  $scope.currentEdit = {};
+
+              };
+
+              //function to sync the data
+              $scope.sync = function () {
+                  dataService.getEntries();
+              }
+
+              //function to intialize the connection
+              $scope.initialize = function () {
+
+                azureDataService.addSource('https://joyner.azure-mobile.net/', 'lDfAwKeKBLQFCckQNxkOSGaUiukSfe41', ['people']);
+                  dataService.addSource(azureDataService);
+                  dataService.connect(function (results) {
+                      // We are good to go
+                      // You can also use dataService.onSync callback
+                  }, $scope);
+              }
+
+              $scope.Edit = function (person) {
+                  console.log(person);
+                  $scope.menu = "edit";
+                  $scope.currentEdit = person;
+              }
+
+
+              $scope.watchbuttons = function () {
+                  $scope.$watch('sortField', function () {
+                      $scope.ascending = true;
+                  });
+
+                  $scope.$watch(function () {
+                      return $scope.sortField + $scope.ascending;
+                  }, function () {
+                      if ($scope.ascending) {
+                          $scope.directionalSort = '+' + $scope.sortField;
+                      } else {
+                          $scope.directionalSort = '-' + $scope.sortField;
+                      }
+
+                  })
+              }
+
+              $scope.initialize();
+              $scope.watchbuttons();
           }
-        }
-        $scope.cancelDetail();
-      };
-      $scope.cancelDetail = function () { $scope.detailDevice = {}; $scope.showDetail = null; };
-    });
+        ]);
   </script>
 </body>
 </html>
