@@ -39,12 +39,12 @@
             <div>
               <div class="btn-group">
 
-                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending" btn-radio="'dname'">
+                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='dname'" btn-radio="'dname'">
                   Device Name
                   <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='dname' && ascending"></i>
                   <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='dname' && !ascending"></i>
                 </label>
-                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending" btn-radio="'sname'">
+                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='sname'" btn-radio="'sname'">
                   Sensor Name
                   <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='sname' && ascending"></i>
                   <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='sname' && !ascending"></i>
