@@ -11,12 +11,12 @@
 
   <div class="well" ng-hide="showDetail">
     Sort
-    <button class="btn btn-default" ng-click="sortButtonClick('name')">
+    <button class="btn btn-default" ng-click="sortButtonClick('dname')">
       Name
-      <span ng-show="sortField=='name'">{{(sortAscending)?'+':'-'}}</span>
+      <span ng-show="sortField=='dname'">{{(sortAscending)?'+':'-'}}</span>
     </button>
-    <button class="btn btn-default" ng-click="sortButtonClick('age')">
-      Age
+    <button class="btn btn-default" ng-click="sortButtonClick('time')">
+      Time
       <span ng-show="sortField=='time'">{{(sortAscending)?'+':'-'}}</span>
     </button>
     Search
@@ -28,9 +28,9 @@
     <div ng-container class="row">
       <div ng-repeat="device in devices | filter:filterText | orderBy:sort">
         <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="panel panel-default" ng-click="editPerson(person)">
+          <div class="panel panel-default" ng-click="editDevice(device)">
             <div class="panel-heading">{{ device.dname }}</div>
-            <div class="panel-body"> {{ device.sname }} {{ device.value }}</div>
+            <div class="panel-body"> {{ device.sname }}: {{ device.value }}</div>
           </div>
         </div>
       </div>
@@ -40,9 +40,10 @@
   <div class="container" ng-show="showDetail">
     <input type="text" class="form-control" ng-model="detailDevice.dname" placeholder="Device Name" />
     <input type="text" class="form-control" ng-model="detailDevice.sname" placeholder="Sensor Name" />
-    <button class="btn" ng-show="detailPerson.id == null" ng-click="addDevice(detailDevice)">Add</button>
-    <button class="btn" ng-show="detailPerson.id != null" ng-click="updateDevice(detailDevice)">Update</button>
-    <button class="btn" ng-show="detailPerson.id != null" ng-click="deleteDevice(detailDevice)">Delete</button>
+    <input type="text" class="form-control" ng-model="detailDevice.value" placeholder="Value" />
+        <button class="btn" ng-show="detailDevice.id == null" ng-click="addDevice(detailDevice)">Add</button>
+    <button class="btn" ng-show="detailDevice.id != null" ng-click="updateDevice(detailDevice)">Update</button>
+    <button class="btn" ng-show="detailDevice.id != null" ng-click="deleteDevice(detailDevice)">Delete</button>
     <button class="btn" ng-click="cancelDetail()">Cancel</button>
   </div>
 
@@ -84,15 +85,15 @@
 
       // showDetail, detailPerson, editPerson(person)
       $scope.addButtonClick = function () { $scope.detailDevice = {}; $scope.showDetail = true; };
-      $scope.editPerson = function (device) { $scope.detailDevice = JSON.parse(JSON.stringify(device)); $scope.showDetail = true; };
-      $scope.addPerson = function (device) {
+      $scope.editDevice = function (device) { $scope.detailDevice = JSON.parse(JSON.stringify(device)); $scope.showDetail = true; };
+      $scope.addDevice = function (device) {
         device.id = $scope.device._idGenerator++;
         $scope.devices.push(device);
         $scope.cancelDetail();
       };
       $scope.deleteDevice = function (device) {
         for (var i = 0; i < $scope.devices.length; i++) {
-          if ($scope.devices[i].id == person.id) { $scope.devices.splice(i, 1); break; }
+          if ($scope.devices[i].id == device.id) { $scope.devices.splice(i, 1); break; }
         }
         $scope.cancelDetail();
       };
