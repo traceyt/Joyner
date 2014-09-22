@@ -25,7 +25,7 @@
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Contact Cards</a>
+          <a class="navbar-brand" href="#">Device Data</a>
           <button id="button-nav-group" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -38,18 +38,19 @@
           <ul class="nav navbar-nav">
             <div>
               <div class="btn-group">
+                  <!--
                 <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending" btn-radio="'address1'">
                   City
                   <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='address1' && ascending"></i>
                   <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='address1' && !ascending"></i>
-                </label>
-                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending" btn-radio="'firstname'">
-                  First Name
+                </label-->
+                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending" btn-radio="'dname'">
+                  Device Name
                   <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='firstname' && ascending"></i>
                   <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='firstname' && !ascending"></i>
                 </label>
-                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; currentColumn = 2" btn-radio="'lastname'">
-                  Last Name
+                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; currentColumn = 2" btn-radio="'sname'">
+                  Sensor Name
                   <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='lastname' && ascending"></i>
                   <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='lastname' && !ascending"></i>
                 </label>
@@ -71,10 +72,10 @@
     <div ng-container>
       <div class="row">
         <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort">
-          <div class="col-sm-6 col-md-4 col-lg-2" ng-click="Edit(person)">
+          <div class="col-sm-6 col-md-4 col-lg-2" ng-click="Edit(device)">
             <div class="panel panel-default card">
               <div class="panel-heading">{{ device.dname }} </div>
-              <div class="panel-body">{{ device.sname }} {{ device.lastname }}</div>
+              <div class="panel-body">{{ device.sname }} {{ device.value }}</div>
             </div>
           </div>
         </div>
@@ -93,10 +94,11 @@
   </div>
   <div ng-show="menu == 'add'">
     <div class="well form-horizontal">
-      <legend>Add Person</legend>
+      <legend>Add Device</legend>
       <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
       <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
-      <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />      <button class="btn btn-default" ng-click="Add('devices', currentEdit)">Add</button>
+      <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />      
+      <button class="btn btn-default" ng-click="Add('devices', currentEdit)">Add</button>
       <button class="btn btn-default" ng-click="menu = 'main'">Cancel</button>
     </div>
   </div>
@@ -109,8 +111,8 @@
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@3.1.1" data-semver="3.1.1"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js" data-require="angular.js@1.2.17" data-semver="1.2.17"></script>
   <script src="https://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.1.0.min.js"></script>
-  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.3/AngularCloudDataConnector.js"></script>
-  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.3/Providers/AzureService.js"></script>
+  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.4/AngularCloudDataConnector.js"></script>
+  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.4/Providers/AzureService.js"></script>
 
   <script>
         var app = angular.module('demoApp', ['DataModule', 'AzureDataModule', 'ui.bootstrap']);
@@ -166,7 +168,7 @@
               //function to intialize the connection
               $scope.initialize = function () {
 
-                azureDataService.addSource('https://joyner.azure-mobile.net/', 'lDfAwKeKBLQFCckQNxkOSGaUiukSfe41', ['people']);
+                azureDataService.addSource('https://joyner.azure-mobile.net/', 'lDfAwKeKBLQFCckQNxkOSGaUiukSfe41', ['devices']);
                   dataService.addSource(azureDataService);
                   dataService.connect(function (results) {
                       // We are good to go
