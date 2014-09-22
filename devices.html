@@ -70,7 +70,7 @@
           <div class="col-sm-6 col-md-4 col-lg-2" ng-click="Edit(device)">
             <div class="panel panel-default card">
               <div class="panel-heading">{{ device.dname }} </div>
-              <div class="panel-body">{{ device.sname }} {{ device.value }}</div>
+              <div class="panel-body">{{ device.sname }}: {{ device.value }}</div>
             </div>
           </div>
         </div>
@@ -116,45 +116,39 @@
               $scope.menu = "main";
 
               $scope.Delete = function (tableName, entity) {
-                  dataService.remove(tableName, entity, function () {
-                      //updates the data after you add data
-                      $scope.sync();
-                  }, function () {
-                      console.log('Problem removing the data.')
-                  });
-
+                  dataService.remove(tableName, entity);
+                  dataService.commit();
                   $scope.menu = "main";
                   $scope.currentEdit = {};
               };
 
               //function to add a new data entry
               $scope.Add = function (tableName, entity) {
-                  dataService.add(tableName, entity, function () {
-                      //updates the data after you add data
-                      $scope.sync();
-                  }, function () {
-                      console.log('Problem adding data.')
-                  });
-
+                  dataService.add(tableName, entity);
+                  dataService.commit();
                   $scope.menu = "main";
                   $scope.currentEdit = {};
               };
 
+              //$scope.add = function (tableName) {
+              //    var entity = new Object;
+              //    $scope.editEntity = entity;
+              //    dataService.add(tableName, entity);
+              //    $scope.showDetail = true;
+              //};
+
               $scope.Change = function (tableName, entity) {
-                  dataService.update(tableName, entity, function () {
-                      $scope.sync();
-                  }, function () {
-                      console.log('Problem updating data.')
-                  });
+                  //dataService.update(tableName, entity);
+                  dataService.commit();
                   $scope.menu = "main";
                   $scope.currentEdit = {};
 
               };
 
               //function to sync the data
-              $scope.sync = function () {
-                  dataService.getEntries();
-              }
+              //$scope.sync = function () {
+              //    dataService.getEntries();
+              //}
 
               //function to intialize the connection
               $scope.initialize = function () {
