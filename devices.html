@@ -89,7 +89,6 @@
   </div>
   <div ng-show="menu == 'add'">
     <div class="well form-horizontal">
-      <legend>Add Device</legend>
       <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
       <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
       <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />      
@@ -99,16 +98,15 @@
   </div>
 
 
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
-  <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
   <script src="https://code.jquery.com/jquery-2.0.3.min.js" data-require="jquery@*" data-semver="2.0.3"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@3.1.1" data-semver="3.1.1"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
   <script src="https://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.1.0.min.js"></script>
   <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.4/AngularCloudDataConnector.js"></script>
   <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.4/Providers/AzureService.js"></script>
 
   <script>
-        var app = angular.module('demoApp', ['DataModule', 'AzureDataModule', 'ui.bootstrap']);
+        var app = angular.module('demoApp', ['DataModule', 'AzureDataModule']);
         app.controller('demoController', ['$scope', 'dataService', 'azureDataService',
           function ($scope, dataService, azureDataService) {
               //define global scope variables
