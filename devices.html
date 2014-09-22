@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html ng-app="AllJoynApp">
+
+<head>
+  <title>Lesson</title>
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body ng-controller="AllJoynController">
+
+
+  <div class="well" ng-hide="showDetail">
+    Sort
+    <button class="btn btn-default" ng-click="sortButtonClick('name')">
+      Name
+      <span ng-show="sortField=='name'">{{(sortAscending)?'+':'-'}}</span>
+    </button>
+    <button class="btn btn-default" ng-click="sortButtonClick('age')">
+      Age
+      <span ng-show="sortField=='time'">{{(sortAscending)?'+':'-'}}</span>
+    </button>
+    Search
+    <input type="text" class="btn" ng-model="filterText" placeholder="" />
+    Add<button class="btn btn-default" ng-click="addButtonClick()">New</button>
+  </div>
+
+  <div class="container" ng-hide="showDetail">
+    <div ng-container class="row">
+      <div ng-repeat="device in devices | filter:filterText | orderBy:sort">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="panel panel-default" ng-click="editPerson(person)">
+            <div class="panel-heading">{{ device.dname }}</div>
+            <div class="panel-body"> {{ device.sname }} {{ device.value }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" ng-show="showDetail">
+    <input type="text" class="form-control" ng-model="detailDevice.dname" placeholder="Device Name" />
+    <input type="text" class="form-control" ng-model="detailDevice.sname" placeholder="Sensor Name" />
+    <button class="btn" ng-show="detailPerson.id == null" ng-click="addDevice(detailDevice)">Add</button>
+    <button class="btn" ng-show="detailPerson.id != null" ng-click="updateDevice(detailDevice)">Update</button>
+    <button class="btn" ng-show="detailPerson.id != null" ng-click="deleteDevice(detailDevice)">Delete</button>
+    <button class="btn" ng-click="cancelDetail()">Cancel</button>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+
+  <script>
+    var app = angular.module('AllJoynApp', []);
+    app.controller('AllJoynController', function ($scope) {
+      $scope.devices = [{
+        'id' : 0,
+        'dname': 'Water Heater 1',
+        'value': 100,
+        'sname': 'Temperature 1'
+      }, {
+        'id': 1,
+        'dname': 'Water Heater 2',
+        'value': 102,
+        'sname': 'Temperature 1'
+      }];
+
+      $scope.devices._idGenerator = $scope.devices.length;
+
+      // sort, sortField, sortAscending, sortButtonClick(field)
+      $scope.$watch('sortField', function () {
+        $scope.sortAscending = true;
+      });
+      $scope.$watch('sortField+sortAscending', function () {
+        $scope.sort = (($scope.sortAscending) ? "+" : "-") + $scope.sortField;
+      });
+
+      $scope.sortField = "dname";
+
+      $scope.sortButtonClick = function (field) {
+        $scope.sortField = field;
+        $scope.sortAscending = !$scope.sortAscending;
+      };
+
+      // showDetail, detailPerson, editPerson(person)
+      $scope.addButtonClick = function () { $scope.detailDevice = {}; $scope.showDetail = true; };
+      $scope.editPerson = function (device) { $scope.detailDevice = JSON.parse(JSON.stringify(device)); $scope.showDetail = true; };
+      $scope.addPerson = function (device) {
+        device.id = $scope.device._idGenerator++;
+        $scope.devices.push(device);
+        $scope.cancelDetail();
+      };
+      $scope.deleteDevice = function (device) {
+        for (var i = 0; i < $scope.devices.length; i++) {
+          if ($scope.devices[i].id == person.id) { $scope.devices.splice(i, 1); break; }
+        }
+        $scope.cancelDetail();
+      };
+      $scope.updateDevice = function (device) {
+        for (var i = 0; i < $scope.devices.length; i++) {
+          if ($scope.devices[i].id == device.id) {
+            $scope.devices[i] = device;
+            break;
+          }
+        }
+        $scope.cancelDetail();
+      };
+      $scope.cancelDetail = function () { $scope.detailDevice = {}; $scope.showDetail = null; };
+    });
+  </script>
+</body>
+</html>
