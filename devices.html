@@ -1,8 +1,9 @@
 ﻿<!DOCTYPE html>
-<html ng-app="demoApp">
+<html ng-app="JoynerApp">
 <head>
+    <title>Joyner Devices</title>
   <style>
-    .card: hover {
+    .card:hover {
       -webkit-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
       -moz-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
       box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
@@ -63,14 +64,14 @@
       </div>
       <!-- /.container-fluid -->
     </nav>
-    <!-- <p>This lesson shows the use of the Angular Cloud Data Connector. It loads property information from Windows Azure Mobile Services.</p> -->
+    
     <div ng-container>
       <div class="row">
         <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort">
           <div class="col-sm-6 col-md-4 col-lg-2" ng-click="Edit(device)">
             <div class="panel panel-default card">
-              <div class="panel-heading">{{ device.dname }} </div>
-              <div class="panel-body">{{ device.sname }}: {{ device.value }}</div>
+              <div class="panel-heading">{{ device.dname }} <br />Device ID: {{device.did}} </div>
+              <div class="panel-body">{{ device.sname }}: {{ device.value }} <br />Sensor ID: {{device.sid}}</div>
             </div>
           </div>
         </div>
@@ -79,8 +80,10 @@
   </div>
   <div ng-show="menu == 'edit'">
     <div class="well form-horizontal">
-      <input  type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
-      <input  type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
+      <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
+      <input type="text" ng-model='currentEdit.did' class="form-control" placeholder="Device ID" />
+      <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
+      <input type="text" ng-model='currentEdit.sid' class="form-control" placeholder="Sensor ID" />
       <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />
       <button class="btn btn-default" ng-click="Change('devices', currentEdit)">Change</button>
       <button class="btn btn-default" ng-click="Delete('devices', currentEdit)">Delete</button>
@@ -90,9 +93,11 @@
   <div ng-show="menu == 'add'">
     <div class="well form-horizontal">
       <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
+      <input type="text" ng-model='currentEdit.did' class="form-control" placeholder="Device ID" />
       <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
-      <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />      
-      <button class="btn btn-default" ng-click="Add('devices', currentEdit)">Add</button>
+      <input type="text" ng-model='currentEdit.sid' class="form-control" placeholder="Sensor ID" />
+      <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />
+      <button class="btn btn-default" ng-click="Add('devices')">Add</button>
       <button class="btn btn-default" ng-click="menu = 'main'">Cancel</button>
     </div>
   </div>
@@ -106,7 +111,7 @@
   <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.6/Providers/AzureService.js"></script>
 
   <script>
-        var app = angular.module('demoApp', ['DataModule', 'AzureDataModule']);
+        var app = angular.module('JoynerApp', ['DataModule', 'AzureDataModule']);
         app.controller('demoController', ['$scope', 'dataService', 'azureDataService',
           function ($scope, dataService, azureDataService) {
               //define global scope variables
@@ -130,13 +135,6 @@
                   $scope.currentEdit = {};
               };
 
-              //$scope.add = function (tableName) {
-              //    var entity = new Object;
-              //    $scope.editEntity = entity;
-              //    dataService.add(tableName, entity);
-              //    $scope.showDetail = true;
-              //};
-
               $scope.Change = function (tableName, entity) {
                   //dataService.update(tableName, entity);
                   dataService.commit();
@@ -145,10 +143,6 @@
 
               };
 
-              //function to sync the data
-              //$scope.sync = function () {
-              //    dataService.getEntries();
-              //}
 
               //function to intialize the connection
               $scope.initialize = function () {
@@ -156,8 +150,6 @@
                 azureDataService.addSource('https://joyner.azure-mobile.net/', 'lDfAwKeKBLQFCckQNxkOSGaUiukSfe41', ['devices']);
                   dataService.addSource(azureDataService);
                   dataService.connect(function (results) {
-                      // We are good to go
-                      // You can also use dataService.onSync callback
                   }, $scope);
               }
 
