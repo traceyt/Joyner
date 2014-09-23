@@ -70,8 +70,14 @@
         <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort">
           <div class="col-sm-6 col-md-4 col-lg-2" ng-click="Edit(device)">
             <div class="panel panel-default card">
-              <div class="panel-heading">{{ device.dname }} <br />Device ID: {{device.did}} </div>
-              <div class="panel-body">{{ device.sname }}: {{ device.value }} <br />Sensor ID: {{device.sid}}</div>
+              <div class="panel-heading">Owner: {{device.user}} Location: {{device.location}} {{device.sublocation}} </div>
+              <div class="panel-body">Device Name: {{ device.dname }} <br />Device ID: {{device.did}} <br />
+                Sensor Type: {{device.sensortype}} <br />
+                Sensor ID: {{device.sid}} <br />
+                Sensor {{ device.sname }}: Current Reading:{{ device.reading }} <br />
+                Set Point: {{device.setpoint}}  (min/max): ({{device.minsetting}}/{{device.maxsetting}})
+                
+                </div>
             </div>
           </div>
         </div>
@@ -80,11 +86,19 @@
   </div>
   <div ng-show="menu == 'edit'">
     <div class="well form-horizontal">
-      <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
+      <input type="text" ng-model='currentEdit.user' class="form-control" placeholder="User Name" />
+      <input type="text" ng-model='currentEdit.location' class="form-control" placeholder="Location" />
+      <input type="text" ng-model='currentEdit.sublocation' class="form-control" placeholder="Room" />
       <input type="text" ng-model='currentEdit.did' class="form-control" placeholder="Device ID" />
-      <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
+      <input type="text" ng-model='currentEdit.dtype' class="form-control" placeholder="Device Type" />
+      <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
       <input type="text" ng-model='currentEdit.sid' class="form-control" placeholder="Sensor ID" />
-      <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />
+      <input type="text" ng-model='currentEdit.sensortype' class="form-control" placeholder="Sensor Type" />
+      <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
+      <input type="text" ng-model='currentEdit.reading' class="form-control" placeholder="Sensor Reading" />
+      <input type="text" ng-model='currentEdit.setpoint' class="form-control" placeholder="Sensor Set Point" />
+      <input type="text" ng-model='currentEdit.maxsetting' class="form-control" placeholder="Sensor Max Setting" />
+      <input type="text" ng-model='currentEdit.minsetting' class="form-control" placeholder="Sensor Min Setting" />
       <button class="btn btn-default" ng-click="Change('devices', currentEdit)">Change</button>
       <button class="btn btn-default" ng-click="Delete('devices', currentEdit)">Delete</button>
       <button class="btn btn-default" ng-click="menu = 'main'; currentEdit={}">Cancel</button>
@@ -92,12 +106,20 @@
   </div>
   <div ng-show="menu == 'add'">
     <div class="well form-horizontal">
-      <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
-      <input type="text" ng-model='currentEdit.did' class="form-control" placeholder="Device ID" />
-      <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
-      <input type="text" ng-model='currentEdit.sid' class="form-control" placeholder="Sensor ID" />
-      <input type="text" ng-model='currentEdit.value' class="form-control" placeholder="Value" />
-      <button class="btn btn-default" ng-click="Add('devices')">Add</button>
+        <input type="text" ng-model='currentEdit.user' class="form-control" placeholder="User Name" />
+        <input type="text" ng-model='currentEdit.location' class="form-control" placeholder="Location" />
+        <input type="text" ng-model='currentEdit.sublocation' class="form-control" placeholder="Room" />
+        <input type="text" ng-model='currentEdit.did' class="form-control" placeholder="Device ID" />
+        <input type="text" ng-model='currentEdit.dtype' class="form-control" placeholder="Device Type" />
+        <input type="text" ng-model='currentEdit.dname' class="form-control" placeholder="Device Name" />
+        <input type="text" ng-model='currentEdit.sid' class="form-control" placeholder="Sensor ID" />
+        <input type="text" ng-model='currentEdit.sensortype' class="form-control" placeholder="Sensor Type" />
+        <input type="text" ng-model='currentEdit.sname' class="form-control" placeholder="Sensor Name" />
+        <input type="text" ng-model='currentEdit.reading' class="form-control" placeholder="Sensor Reading" />
+        <input type="text" ng-model='currentEdit.setpoint' class="form-control" placeholder="Sensor Set Point" />
+        <input type="text" ng-model='currentEdit.maxsetting' class="form-control" placeholder="Sensor Max Setting" />
+        <input type="text" ng-model='currentEdit.minsetting' class="form-control" placeholder="Sensor Min Setting" />
+      <button class="btn btn-default" ng-click="Add('devices', currentEdit)">Add</button>
       <button class="btn btn-default" ng-click="menu = 'main'">Cancel</button>
     </div>
   </div>
