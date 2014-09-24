@@ -164,7 +164,7 @@ span {
 
 .device li {
     position: relative;
-    padding: 18px 42px 21px 25px;
+    padding: 4px 42px 7px 25px;
     margin-top: 2px;
     font-size: 14px;
     line-height: 1.214;
@@ -176,6 +176,7 @@ span {
 
 .device li:first-child {
     margin-top: 0;
+    padding-top: 15px;
 }
 
 .device li:last-child {
@@ -183,13 +184,9 @@ span {
     border-radius: 0 0 6px 6px;
 }
 
-.device li.device-done {
-    color: #1abc9c;
-    background: transparent;
-}
-
-.device li.device-done .device-name {
-    color: #1abc9c;
+.device li h4 {
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 .device-head {
