@@ -1,3 +1,15 @@
+/* Table of Contents
+------------------------------------------------------------
+ - General Styles                                           
+ - Menu-Panel
+ - Main Content Body
+ - NavBar
+ - Device Cards
+*/  
+
+/* General Style */
+/* --------------------------------------------------------- */
+
 body {
     font-family: 'Segoe UI', sans-serif;
 }
@@ -6,21 +18,7 @@ span {
     font-style: italic;
 }
 
-.card:hover {
-    -webkit-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, .13);
-       -moz-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, .13);
-            box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, .13);
-}
-
-.btn {
-    border-radius: 0;
-}
-
-.navbar-brand {
-    margin-top: -3px;
-}
-
-/* Menu */
+/* Menu Panel */
 /* --------------------------------------------------------- */
 #panel-menu {
     float: left;
@@ -157,6 +155,24 @@ span {
     color: #fff;
 }
 
+#navbar form {
+    margin-top: 23px;
+    margin-bottom: 0;
+}
+
+#navbar .navbar-inverse .navbar-toggle,
+#navbar .navbar-inverse .navbar-collapse, 
+#navbar .navbar-inverse .navbar-form,
+form.navbar-form.navbar-right.ng-pristine.ng-valid,
+div#navbar-collapse-01,
+#navbar button.navbar-toggle {
+    border-color: #fff;
+}
+
+form.navbar-form.navbar-right.ng-pristine.ng-valid {
+    margin-top: 0;
+}
+
 /* Content */
 /* --------------------------------------------------------- */
 
@@ -172,7 +188,8 @@ span {
 /* Device Cards */
 /* --------------------------------------------------------- */
 
-.device {
+.device.col-md-3 {
+    width: 400px;
     margin-bottom: 20px;
 
     color: #798795;
