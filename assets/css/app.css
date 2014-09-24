@@ -7,13 +7,13 @@ span {
 }
 
 .card:hover {
-    -webkit-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
-    -moz-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
-    box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, 0.13);
+    -webkit-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, .13);
+       -moz-box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, .13);
+            box-shadow: 10px 12px 27px 9px rgba(0, 0, 0, .13);
 }
 
 .btn {
-    border-radius: 0px;
+    border-radius: 0;
 }
 
 .navbar-brand {
@@ -23,31 +23,35 @@ span {
 /* Menu */
 /* --------------------------------------------------------- */
 #panel-menu {
-    background-color: #2B3741;
-    height: 100vh;
-    width: 250px;
-    box-shadow: inset -7px 0 9px -7px rgba(0,0,0,0.7);
     float: left;
+
+    width: 250px;
+    height: 100vh;
+
+    background-color: #2b3741;
+    box-shadow: inset -7px 0 9px -7px rgba(0,0,0,.7);
 }
 
 #panel-menu #user-info img {
     display: block;
-    margin-left: auto;
+
     margin-right: auto;
+    margin-left: auto;
 }
 
 #panel-menu #user-info {
-    padding-top: 20px;
     height: 200px;
+    padding-top: 20px;
 }
 
 #leftMenu .accordion-group {
-    margin-bottom: 0px;
-    border:0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
-    background-color: #1D272F;
+    margin-bottom: 0;
+
+    border: 0;
+    -webkit-border-radius: 0;
+       -moz-border-radius: 0;
+            border-radius: 0;
+    background-color: #1d272f;
 }
 
 #leftMenu .accordion-inner ul {
@@ -56,54 +60,65 @@ span {
 }
 
 #leftMenu .accordion-inner ul li {
-    background-color: #1D272F;
-    display: block;
-    height: 75px;
     line-height: 75px;
-    color: #6C757D;
+
+    display: block;
+
+    height: 75px;
+
+    color: #6c757d;
+    background-color: #1d272f;
 }
 
 #leftMenu .accordion-inner li span.icon {
-    color: #191D21;
+    color: #191d21;
 }
 
 #leftMenu .accordion-heading {
-    height: 75px;
     line-height: 75px;
+
+    height: 75px;
+
+    list-style-type: none;
+
     border-top: 1px solid #182026;
-    background-color: #2B3741;
-    list-style-type:none;
+    background-color: #2b3741;
 }
 
 #leftMenu .accordion-heading.last {
     border-bottom: 1px solid #182026;
-}  
-
-#leftMenu .accordion-heading a {
-    display: block; 
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    height: 100%;
-    width: 100%;
-    padding-left: 20px;
 }
 
-#leftMenu .accordion-heading a:hover {  
+#leftMenu .accordion-heading a {
+    font-size: 16px;
+    font-weight: bold;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+
+    text-decoration: none;
+
     color: #fff;
-    background-color: #4E6071;
+}
+
+#leftMenu .accordion-heading a:hover {
+    color: #fff;
+    background-color: #4e6071;
 }
 
 #leftMenu .accordion-heading .active {
     width: 182px;
     height: 34px;
+
     border: 1px solid #5b5b5b; /* inner stroke */
     background-color: #353535; /* layer fill content */
 }
 
 #leftMenu span.icon {
-    color: #2ECC71;
+    color: #2ecc71;
 }
 
 /* Body */
@@ -118,18 +133,22 @@ span {
 
 #js-openmenubutton {
     margin-left: 20px;
+
     color: #fff;
 }
 
 #navbar {
     margin-left: 250px;
-    background-color: #E4494C;
+
+    border: none;
+    background-color: #e4494c;
 }
 
 #navbar .navbar-brand,
 #navbar .navbar-nav li a,
 #navbar .navbar-nav label {
     line-height: 80px;
+
     height: 80px;
     padding-top: 0;
 }
@@ -142,7 +161,12 @@ span {
 /* --------------------------------------------------------- */
 
 #main-content {
+    height: 100vh;
     padding-top: 100px;
+}
+
+#main-content div[ng-show] {
+    height: 100%;
 }
 
 /* Device Cards */
@@ -150,28 +174,35 @@ span {
 
 .device {
     margin-bottom: 20px;
+
     color: #798795;
     border-radius: 6px;
 }
 
 .device ul {
-    padding: 0;
     margin: 0;
+    padding: 0;
+
     list-style-type: none;
-    background-color: #ECF0F1;
+
     border-radius: 0 0 6px 6px;
+    background-color: #ecf0f1;
 }
 
 .device li {
-    position: relative;
-    padding: 4px 42px 7px 25px;
-    margin-top: 2px;
     font-size: 14px;
     line-height: 1.214;
-    background: #ECF0F1;
-    background-size: 20px 20px;
+
+    position: relative;
+
+    margin-top: 2px;
+    padding: 4px 42px 7px 25px;
+
     -webkit-transition: .25s;
-    transition: .25s;
+            transition: .25s;
+
+    background: #ecf0f1;
+    background-size: 20px 20px;
 }
 
 .device li:first-child {
@@ -181,6 +212,7 @@ span {
 
 .device li:last-child {
     padding-bottom: 21px;
+
     border-radius: 0 0 6px 6px;
 }
 
@@ -191,44 +223,62 @@ span {
 
 .device-head {
     position: relative;
+
     padding: 19px 25px 20px;
+
     color: #34495e;
+    border-radius: 6px 6px 0 0;
     background: #1abc9c;
     background-size: 16px 16px;
-    border-radius: 6px 6px 0 0;
 }
 
 .device-head:before {
-    position: absolute;
-    top: 50%;
-    left: 92%;
-    display: inline-block;
-    margin: -.5em 0 0 -1em;
     font-family: 'Flat-UI-Pro-Icons';
     font-size: 16px;
     line-height: 17px;
-    content: "\e634";
+
+    position: absolute;
+    top: 50%;
+    left: 92%;
+
+    display: inline-block;
+
+    margin: -.5em 0 0 -1em;
+
+    content: '\e634';
 }
 
 .device-head h5 {
     font-size: 20px;
+
     margin: 0;
     padding: 0;
 }
 
 .device-icon {
-    float: left;
-    padding: 11px 22px 0 0;
     font-size: 24px;
+
+    float: left;
+
+    padding: 11px 22px 0 0;
 }
 
 .device-content {
-    padding-top: 1px;
     overflow: hidden;
+
+    padding-top: 1px;
 }
 
 .device-name {
-    margin: 1px 0 3px;
     font-size: 17px;
+
+    margin: 1px 0 3px;
+
     color: #fff;
+}
+
+.devices-row {
+    overflow-x: scroll;
+
+    height: 100%;
 }

@@ -34,8 +34,7 @@
                         <div class="accordion-inner">
                             <ul>
                                 <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" >
-                                    <li><span class="icon fui-location"></span> {{device.sublocation}}</li>
-
+                                    <li><span class="icon fui-location"></span> {{device.location}}</li>
                                 </div>
                             </ul>
                         </div>
@@ -106,7 +105,7 @@
         </nav><!-- /navbar -->
         <div id="main-content">
             <div ng-container ng-show="menu == 'main'">
-                <div class="row">
+                <div class="devices-row">
                     <div class="col-md-3 device" ng-click="Edit(device)" ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" ng-hide="menu == 'edit'">
                         <div class="device-head">
                             <h5>{{ device.dname }}</h5>
