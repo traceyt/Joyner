@@ -34,7 +34,7 @@
             <div class="accordion-inner">
               <ul>
                 <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort">
-                  <li><span class="icon fui-location"></span> {{device.location}}</li>
+                  <li><span class="icon fui-location"></span> {{device.network}}</li>
                 </div>
               </ul>
             </div>
@@ -206,7 +206,7 @@
 
           //function to intialize the connection
           $scope.initialize = function () {
-            azureDataService.addSource('https://joyner.azure-mobile.net/', 'lDfAwKeKBLQFCckQNxkOSGaUiukSfe41', ['devices']);
+            // azureDataService.addSource('https://joyner.azure-mobile.net/', 'lDfAwKeKBLQFCckQNxkOSGaUiukSfe41', ['devices']);
             // dataService.addSource(azureDataService);
             dataService.addSource(nitrogenDataService);
             nitrogenDataService.connect('test@nitrogen.io', 'DxTest12', function (err) {
