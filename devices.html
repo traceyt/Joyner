@@ -70,12 +70,12 @@
         <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort">
           <div class="col-sm-6 col-md-4 col-lg-2" ng-click="Edit(device)">
             <div class="panel panel-default card">
-              <div class="panel-heading">Owner: {{device.user}} Location: {{device.location}} {{device.sublocation}} </div>
+              <div class="panel-heading">Owner: {{device.user}} <br /> Location: {{device.location}} {{device.sublocation}} </div>
               <div class="panel-body">Device Name: {{ device.dname }} <br />Device ID: {{device.did}} <br />
                 Sensor Type: {{device.sensortype}} <br />
                 Sensor ID: {{device.sid}} <br />
                 Sensor {{ device.sname }}: Current Reading:{{ device.reading }} <br />
-                Set Point: {{device.setpoint}}  (min/max): ({{device.minsetting}}/{{device.maxsetting}})
+                Set Point: {{device.setpoint}}  (min/max: {{device.minsetting}}/{{device.maxsetting}})
                 
                 </div>
             </div>
