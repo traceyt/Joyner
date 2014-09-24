@@ -98,18 +98,20 @@
         <div class="devices-row">
           <div class="col-md-3 device" ng-click="Edit(device)" ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" ng-hide="menu == 'edit'">
             <div class="device-head">
-              <h5>{{ device.dname }}</h5>
+              <h5>{{ device.name }}</h5>
             </div>
             <ul>
+              <li>Device ID <h4>{{device.id}}</h4></li>
+              <!--
               <li>Owner<h4>{{device.user}}</h4></li>
               <li>Location <h4>{{device.location}} {{device.sublocation}}</h4></li>
-              <li>Device ID <h4>{{device.did}}</h4></li>
               <li>Sensor Type <h4>{{device.sensortype}}</h4></li>
               <li>Sensor ID <h4>{{device.sid}}</h4></li>
               <li>Current Reading <h4>{{ device.reading }}</h4></li>
               <li>Set Point <h4>{{device.setpoint}}</h4></li>
               <li>Set Point (Min/Max) <h4>{{device.minsetting}}/{{device.maxsetting}}</h4></li>
-            </ul>
+                 -->
+            </ul>               
           </div>
         </div>
       </div>
@@ -161,13 +163,17 @@
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@3.1.1" data-semver="3.1.1"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
   <script src="https://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.1.0.min.js"></script>
-  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.6/AngularCloudDataConnector.js"></script>
-  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.6/Providers/AzureService.js"></script>
+  <script src="//api.nitrogen.io/client/nitrogen.js"></script>
+  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.7/AngularCloudDataConnector.js"></script>
+  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.7/Providers/AzureService.js"></script>
+  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.7/Providers/NitrogenService.js"></script>
+
 
   <script>
-    var app = angular.module('JoynerApp', ['DataModule', 'AzureDataModule']);
-    app.controller('demoController', ['$scope', 'dataService', 'azureDataService',
-        function ($scope, dataService, azureDataService) {
+    var app = angular.module('JoynerApp', ['DataModule', 'AzureDataModule','NitrogenDataModule']);
+    app.controller('demoController', ['$scope', 'dataService', 'azureDataService', 'nitrogenDataService',
+        function ($scope, dataService, azureDataService,nitrogenDataService) {
+
           //define global scope variables
           $scope.sortField = 'dtype';
           $scope.ascending = true;
@@ -200,11 +206,12 @@
 
           //function to intialize the connection
           $scope.initialize = function () {
-
             azureDataService.addSource('https://joyner.azure-mobile.net/', 'lDfAwKeKBLQFCckQNxkOSGaUiukSfe41', ['devices']);
-            dataService.addSource(azureDataService);
-            dataService.connect(function (results) {
-            }, $scope);
+            // dataService.addSource(azureDataService);
+            dataService.addSource(nitrogenDataService);
+            nitrogenDataService.connect('test@nitrogen.io', 'DxTest12', function (err) {
+              dataService.connect(function (results) { }, $scope, 3);
+            });
           }
 
           $scope.Edit = function (person) {
