@@ -77,16 +77,16 @@
         <ul class="nav navbar-nav">
           <div>
             <div class="btn-group">
-              <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='dname'" btn-radio="'dname'">
-                Device Name
-                <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='dname' && ascending"></i>
-                <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='dname' && !ascending"></i>
+              <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='location'" btn-radio="'dname'">
+                Location
+                  <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='location' && ascending"></i>
+                  <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='location' && !ascending"></i>
               </label>
-              <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='sname'" btn-radio="'sname'">
-                Sensor Name
-                <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='sname' && ascending"></i>
-                <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='sname' && !ascending"></i>
-              </label>
+                <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='dtype'" btn-radio="'sname'">
+                    Device Type
+                    <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='dtype' && ascending"></i>
+                    <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='dtype' && !ascending"></i>
+                </label>
               <label class="btn btn-lg" ng-click="menu = 'add'">Add</label>
             </div>
           </div>
@@ -182,7 +182,7 @@
         app.controller('demoController', ['$scope', 'dataService', 'azureDataService',
           function ($scope, dataService, azureDataService) {
               //define global scope variables
-              $scope.sortField = 'dname';
+              $scope.sortField = 'dtype';
               $scope.ascending = true;
               $scope.currentColumn = 0;
               $scope.menu = "main";
