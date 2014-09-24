@@ -33,10 +33,11 @@
           <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
             <div class="accordion-inner">
               <ul>
-                <li><span class="icon fui-location"></span> House</li>
-                <li><span class="icon fui-location"></span> Shop</li>
-                <li><span class="icon fui-location"></span> Pool</li>
-              </ul>
+                  <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" >
+                      <li><span class="icon fui-location"></span> {{device.sublocation}}</li>
+
+                  </div>
+</ul>
             </div>
           </div>
         </div>
@@ -106,25 +107,25 @@
     <div id="main-content">
       <div ng-container>
         <div class="row">
-          <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort">
-            <div class="col-md-3" ng-click="Edit(device)">
-              <div class="device">
-                <div class="device-head">
-                  <h5>{{ device.dname }}</h5>
+            <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" ng-hide="menu == 'edit'">
+               <div class="col-md-8" ng-click="Edit(device)">
+                    <div class="device">
+                        <div class="device-head">
+                            <h5>{{ device.dname }}</h5>
+                        </div>
+                        <ul>
+                            <li>Owner: {{device.user}}</li>
+                            <li>Location: {{device.location}} {{device.sublocation}}</li>
+                            <li>Device ID: {{device.did}}</li>
+                            <li>Sensor Type: {{device.sensortype}}</li>
+                            <li>Sensor ID: {{device.sid}}</li>
+                            <li>Current Reading: {{ device.reading }}</li>
+                            <li>Set Point: {{device.setpoint}}</li>
+                            <li>Set Point Range: {{device.minsetting}} - {{device.maxsetting}}</li>
+                        </ul>
+                    </div>
                 </div>
-                <ul>
-                  <li>Owner: {{device.user}}</li>
-                  <li>Location: {{device.location}} {{device.sublocation}}</li>
-                  <li>Device ID: {{device.did}}</li>
-                  <li>Sensor Type: {{device.sensortype}}</li>
-                  <li>Sensor ID: {{device.sid}}</li>
-                  <li>Current Reading: {{ device.reading }}</li>
-                  <li>Set Point: {{device.setpoint}}</li>
-                  <li>Set Point (Min/Max): {{device.minsetting}}/{{device.maxsetting}}</li>
-                </ul>
-              </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
