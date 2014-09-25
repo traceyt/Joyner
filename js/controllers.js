@@ -18,6 +18,11 @@ app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDat
             });
         }
 
+        $scope.Detail = function (device) {
+            $scope.menu = "detail";
+            $scope.currentEdit = device;
+        }
+
         $scope.watchbuttons = function () {
             $scope.$watch('sortField', function () {
                 $scope.ascending = true;

@@ -6,6 +6,7 @@
     <link href="assets/css/flat-ui.css" rel="stylesheet">
     <link rel="shortcut icon" href="assets/img/favicon.ico">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" data-require="bootstrap-css@3.1.1" data-semver="3.1.1" />
+    <link href="assets/css/vendor/bootstrapOverride.css" rel="stylesheet" />
 
     <script src="https://code.jquery.com/jquery-2.0.3.min.js" data-require="jquery@*" data-semver="2.0.3"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@3.1.1" data-semver="3.1.1"></script>
@@ -106,7 +107,7 @@
             </div><!-- /.navbar-collapse -->
         </nav><!-- /navbar -->
         <div id="main-content">
-            <div ng-container ng-show="menu == 'main'">
+            <div ng-show="menu == 'main'">
                 <div class="devices-row">
                     <div class="col-md-3 device" ng-click="Detail(device)" ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" ng-hide="menu == 'detail'">
                         <div class="device-head">
@@ -127,7 +128,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div ng-container ng-show="menu == 'detail'">
+                <dl> <!-- class="dl-horizontal"> ** this is commmented out because the labels are not showing up correctly ** need to figure out and fix ** traceyt -->
+                    <dt>Device Name</dt><dd>{{currentEdit.name}}</dd>
+                    <dt>Device ID</dt><dd>{{currentEdit.id}}</dd>
+                    <dt>Location</dt><dd>{{currentEdit.network}}</dd>
+                </dl>
+                <button class="btn btn-default" ng-click="menu = 'main'; currentEdit={}">Done</button>
+            </div>
     </div>
 </body>
 </html>
