@@ -1,46 +1,141 @@
 <!DOCTYPE html>
-<html ng-app="AllJoynApp">
-
+<html ng-app="JoynerApp">
 <head>
-  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" data-require="bootstrap-css@3.1.1" data-semver="3.1.1" />
+    <title>Joyner Devices</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
+    <link href="assets/css/flat-ui.css" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" data-require="bootstrap-css@3.1.1" data-semver="3.1.1" />
+    <link href="assets/css/vendor/bootstrapOverride.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-2.0.3.min.js" data-require="jquery@*" data-semver="2.0.3"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@3.1.1" data-semver="3.1.1"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.1.0.min.js"></script>
+    <script src="//api.nitrogen.io/client/nitrogen.js"></script>
+    <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.7/AngularCloudDataConnector.js"></script>
+    <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.7/Providers/AzureService.js"></script>
+    <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.7/Providers/NitrogenService.js"></script>
+
+    <script src="js/app.js" type="text/javascript"></script>
+    <script src="js/controllers.js" type="text/javascript"></script>
+
 </head>
 
-<body ng-controller="AllJoynController">
-
-  <div ng-container class="container">
-    <div class="row">
-      <div ng-repeat="device in devices">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-          <div class="panel panel-default">
-            <div class="panel-heading">{{ device.dname }} {{ device.did }}</div>
-            <div class="panel-body">{{ device.sname }}  {{ device.sid }} {{ device.value }}</div>
-          </div>
+<body ng-controller="JoynerApp_DeviceController">
+    <div>
+        <!-- Panel Menu -->
+        <div id="panel-menu">
+            <div id="user-info">
+                <img src="assets/img/user.png" width="200px" />
+            </div>
+            <div class="accordion" id="leftMenu">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#leftMenu" href="#">
+                            <span class="icon fui-home"></span> Dashboard
+                        </a>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#leftMenu" href="#collapseTwo">
+                            <span class="icon fui-location"></span> Locations
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
+                        <div class="accordion-inner">
+                            <ul>
+                                <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort">
+                                    <li><span class="icon fui-location"></span> {{device.network}}</li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#leftMenu" href="#collapseThree">
+                            <span class="icon fui-gear"></span> Settings
+                        </a>
+                    </div>
+                    <div id="collapseThree" class="accordion-body collapse" style="height: 0px; ">
+                        <div class="accordion-inner">
+                            <ul>
+                                <li>This is one</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading last">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#leftMenu" href="#collapseFour">
+                            <span class="icon fui-user"></span> Sign Out
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <!-- /Panel Menu -->
     </div>
-  </div>
-
-  <script src="http://code.jquery.com/jquery-2.0.3.min.js" data-require="jquery@*" data-semver="2.0.3"></script>
-  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@3.1.1" data-semver="3.1.1"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js" data-require="angular.js@1.2.17" data-semver="1.2.17"></script>
-  <script src="//ajax.aspnetcdn.com/ajax/mobileservices/MobileServices.Web-1.1.0.min.js"></script>
-  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.4/AngularCloudDataConnector.js"></script>
-  <script src="//acdccdn.blob.core.windows.net/cdn/ajax/acdc/0.4/Providers/AzureService.js"></script>
-
-
-  <script>
-    var app = angular.module('AllJoynApp', ['DataModule', 'AzureDataModule']);
-    app.controller('AllJoynController', ['$scope', 'dataService', 'azureDataService',
-      function ($scope, dataService, azureDataService) {
-        $scope.message = "Getting data...";
-        azureDataService.addSource('https://joyner.azure-mobile.net/', 'lDfAwKeKBLQFCckQNxkOSGaUiukSfe41', ['devices']);
-        dataService.addSource(azureDataService);
-        dataService.connect(function (results) {
-          $scope.$apply($scope.message = "Data received.");
-        }, $scope, 1);
-      }
-    ]);
-  </script>
+    <div id="main-container">
+        <nav id="navbar" class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                    <span class="sr-only">Toggle navigation</span>
+                </button>
+                <a id="js-openmenubutton" class="navbar-brand" href="#">Device Data</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse-01">
+                <ul class="nav navbar-nav">
+                    <div>
+                        <div class="btn-group">
+                            <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='name'" btn-radio="'device.name'">
+                                Device Name
+                                <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='name' && ascending"></i>
+                                <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='name' && !ascending"></i>
+                            </label>
+                            <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='network'" btn-radio="'device.network'">
+                                Location
+                                <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='network' && ascending"></i>
+                                <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='network' && !ascending"></i>
+                            </label>
+                        </div>
+                    </div>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav><!-- /navbar -->
+        <div id="main-content">
+            <div ng-show="menu == 'main'">
+                <div class="devices-row">
+                    <div class="col-md-3 device" ng-click="Detail(device)" ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" ng-hide="menu == 'detail'">
+                        <div class="device-head">
+                            <h5>{{ device.name }}</h5>
+                        </div>
+                        <ul>
+                            <li>Device ID <h4>{{device.id}}</h4></li>
+                            <li>Location <h4>{{device.network}}</h4></li>
+                            <!--
+                            <li>Owner<h4>{{device.user}}</h4></li>
+                            <li>Sensor Type <h4>{{device.sensortype}}</h4></li>
+                            <li>Sensor ID <h4>{{device.sid}}</h4></li>
+                            <li>Current Reading <h4>{{ device.reading }}</h4></li>
+                            <li>Set Point <h4>{{device.setpoint}}</h4></li>
+                            <li>Set Point (Min/Max) <h4>{{device.minsetting}}/{{device.maxsetting}}</h4></li>
+                             -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div ng-container ng-show="menu == 'detail'">
+                <dl> <!-- class="dl-horizontal"> ** this is commmented out because the labels are not showing up correctly ** need to figure out and fix ** traceyt -->
+                    <dt>Device Name</dt><dd>{{currentEdit.name}}</dd>
+                    <dt>Device ID</dt><dd>{{currentEdit.id}}</dd>
+                    <dt>Location</dt><dd>{{currentEdit.network}}</dd>
+                </dl>
+                <button class="btn btn-default" ng-click="menu = 'main'; currentEdit={}">Done</button>
+            </div>
+    </div>
 </body>
-
 </html>
