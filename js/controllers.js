@@ -3,7 +3,7 @@ app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDat
     function ($scope, dataService, azureDataService, nitrogenDataService) {
 
         //define global scope variables
-        $scope.sortField = 'device.name';
+        $scope.sortField = 'name';
         $scope.ascending = true;
         $scope.currentColumn = 0;
         $scope.menu = "main";

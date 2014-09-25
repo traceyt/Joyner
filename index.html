@@ -90,10 +90,10 @@
                 <ul class="nav navbar-nav">
                     <div>
                         <div class="btn-group">
-                            <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='device.name'" btn-radio="'device.name'">
+                            <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='name'" btn-radio="'device.name'">
                                 Device Name
-                                <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='device.name' && ascending"></i>
-                                <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='device.name' && !ascending"></i>
+                                <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='name' && ascending"></i>
+                                <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='name' && !ascending"></i>
                             </label>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                             <li>Current Reading <h4>{{ device.reading }}</h4></li>
                             <li>Set Point <h4>{{device.setpoint}}</h4></li>
                             <li>Set Point (Min/Max) <h4>{{device.minsetting}}/{{device.maxsetting}}</h4></li>
-                            -->
+                             -->
                         </ul>
                     </div>
                 </div>
