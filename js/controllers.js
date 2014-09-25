@@ -21,6 +21,12 @@ app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDat
         $scope.Detail = function (device) {
             $scope.menu = "detail";
             $scope.currentEdit = device;
+            $scope.currentDeviceID = device.id;
+        }
+
+        $scope.FilterLocation = function (network) {
+            $scope.selectedNetwork = network;
+            console.log("filtering locations");
         }
 
         $scope.watchbuttons = function () {
