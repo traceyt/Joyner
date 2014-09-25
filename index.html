@@ -48,8 +48,8 @@
                     <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
                         <div class="accordion-inner">
                             <ul>
-                                <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" ng-click="FilterLocation(device.network)">
-                                    <li>
+                                <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" ng-click="FilterLocation(device.network)" class="locationList">
+                                    <li id="locationList">
                                         <span class="icon fui-location"></span> {{device.network}}
                                     </li>
                                 </div>
@@ -112,7 +112,7 @@
         <div id="main-content">
             <div ng-show="menu == 'main'">
                 <div class="devices-row">
-                    <div class="col-md-3 device" ng-click="Detail(device)" ng-repeat="device in devices | filter:selectedNetwork | orderBy:directionalSort" ng-hide="menu == 'detail'">
+                    <div class="col-md-3 device" ng-click="Detail(device)" ng-repeat="device in devices | filter: {network:selectedNetwork} | orderBy:directionalSort" ng-hide="menu == 'detail'">
                         <div class="device-head">
                             <h5>{{ device.name }}</h5>
                         </div>
@@ -125,17 +125,21 @@
             </div>
             <div ng-container ng-show="menu == 'detail'">
               <div class="devices-row">
-                    <div class="col-md-3 device" ng-click="Detail(device)" ng-repeat="device in devices | filter:currentDeviceID | orderBy:directionalSort" ng-hide="menu == 'main'">
-                        <div class="device-head">
-                            <h5>{{ device.name }}</h5>
-                        </div>
-                        <ul>
-                            <li>Device ID <h4>{{device.id}}</h4></li>
-                            <li>Location <h4>{{device.network}}</h4></li>
-                            <li ng-repeat="reading in readings | filter:currentDeviceID">{{reading.body}}</li>
-                        </ul>
-                    </div>
-                  <button class="btn btn-default" ng-click="menu = 'main'; currentEdit={}">Done</button>
+                  <div class="col-md-3 device" ng-click="Detail(device)" ng-repeat="device in devices | filter:{id:currentDeviceID} | orderBy:directionalSort" ng-hide="menu == 'main'">
+                      <div class="device-head">
+                          <h5>{{ device.name }}</h5>
+                      </div>
+                      <ul>
+                          <li>Device ID <h4>{{device.id}}</h4></li>
+                          <li>Location <h4>{{device.network}}</h4></li>
+<!--                          <div ng-repeat="reading in readings | filter: currentDeviceID"> -->
+                          <div ng-repeat="reading in readings"> <!-- removing filter temporarily because detail data does not match devices -->
+                              <li>{{reading.id}}</li>
+                              <li>{{reading.body}}</li>
+                          </div>
+                      </ul>
+                  </div>
+                  <button class="btn btn-default" ng-click="menu = 'main'; currentEdit={}; currentDeviceID=''">Done</button>
                   </div>
             </div>
     </div>
