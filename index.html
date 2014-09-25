@@ -95,6 +95,11 @@
                                 <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='name' && ascending"></i>
                                 <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='name' && !ascending"></i>
                             </label>
+                            <label class="btn btn-lg" ng-model="sortField" ng-click="ascending=!ascending; sortField='network'" btn-radio="'device.network'">
+                                Location
+                                <i class="glyphicon glyphicon-chevron-up" ng-show="sortField=='network' && ascending"></i>
+                                <i class="glyphicon glyphicon-chevron-down" ng-show="sortField=='network' && !ascending"></i>
+                            </label>
                         </div>
                     </div>
                 </ul>
