@@ -48,10 +48,10 @@
                     <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
                         <div class="accordion-inner">
                             <ul>
-                                <div ng-repeat="device in devices | unique:'network' | orderBy:directionalSort" ng-click="FilterLocation(device.network)" class="locationList">
-                                    <li id="locationList">
-                                        <button type="button" class="btn btn-link">{{device.network}}</button>
-                                    </li>
+                                <div ng-repeat="device in devices | unique:'network' | orderBy:directionalSort"class="locationList">
+                                   <li> 
+                                       <button type="button" class="btn btn-link" id="loc{{$index}}" ng-click="FilterLocation(device.network, $index)">{{device.network}}</button>
+                                   </li> 
                                 </div>
                             </ul>
                         </div>
@@ -132,11 +132,10 @@
                         <ul>
                             <li>Device ID <h4>{{device.id}}</h4></li>
                             <li>Location <h4>{{device.network}}</h4></li>
-<!--                          <div ng-repeat="reading in readings | filter: currentDeviceID"> -->
-                          <div ng-repeat="reading in readings"> <!-- removing filter temporarily because detail data does not match devices -->
-                              <li>{{reading.id}}</li>
+                            <div ng-repeat="reading in readings |filter: currentDeviceID" >
+                              <li>Timestamp: {{reading.ts}}</li>
                               <li>{{reading.body}}</li>
-                          </div>
+                            </div>
                         </ul>
                     </div>
                   <button class="btn btn-default" ng-click="menu = 'main'; currentEdit={}; currentDeviceID=''">Done</button>
