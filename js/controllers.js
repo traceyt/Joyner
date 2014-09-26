@@ -25,8 +25,14 @@ app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDat
         }
 
         $scope.FilterLocation = function (network) {
-            $scope.selectedNetwork = network;
-            console.log("filtering locations");
+            if ($scope.selectedNetwork == network) {
+                $scope.selectedNetwork = '';
+                console.log("removing filter" + network);
+            }
+            else {
+                $scope.selectedNetwork = network;
+                console.log("adding filter" + network);
+            }
         }
 
         $scope.watchbuttons = function () {
