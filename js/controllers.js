@@ -1,4 +1,4 @@
-﻿var app = angular.module('JoynerApp', ['DataModule', 'AzureDataModule', 'NitrogenDataModule']);
+﻿
 app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDataService', 'nitrogenDataService',
     function ($scope, dataService, azureDataService, nitrogenDataService) {
 
