@@ -25,7 +25,7 @@ app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDat
         }
 
         $scope.FilterLocation = function (network) {
-            if ($scope.selectedNetwork == network) {
+            if ($scope.selectedNetwork == network || $scope.selectedNetwork == 'All') {
                 $scope.selectedNetwork = '';
                 console.log("removing filter" + network);
             }

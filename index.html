@@ -48,9 +48,9 @@
                     <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
                         <div class="accordion-inner">
                             <ul>
-                                <div ng-repeat="device in devices | filter:searchText | orderBy:directionalSort" ng-click="FilterLocation(device.network)" class="locationList">
+                                <div ng-repeat="device in devices | unique:'network' | orderBy:directionalSort" ng-click="FilterLocation(device.network)" class="locationList">
                                     <li id="locationList">
-                                        <span class="icon fui-location"></span> {{device.network}}
+                                        <button type="button" class="btn btn-link">{{device.network}}</button>
                                     </li>
                                 </div>
                             </ul>
