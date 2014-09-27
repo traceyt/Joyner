@@ -21,6 +21,7 @@
     <Content Include="assets\css\flat-ui.css" />
     <Content Include="assets\css\flat-ui.min.css" />
     <Content Include="assets\css\vendor\bootstrap.min.css" />
+    <Content Include="assets\css\vendor\bootstrapOverride.css" />
     <Content Include="assets\fonts\glyphicons\flat-ui-icons-regular.svg" />
     <Content Include="assets\fonts\lato\lato-black.svg" />
     <Content Include="assets\fonts\lato\lato-bold.svg" />
