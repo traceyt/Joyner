@@ -31,7 +31,7 @@ app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDat
         }
 
         $scope.FilterLocation = function (network, index) {
-            if ($scope.selectedNetwork == network || $scope.selectedNetwork == 'All') {
+            if ($scope.selectedNetwork == network || network == 'All') {
                 $scope.selectedNetwork = '';
                 $scope.ShowActiveLocation(index, false);
             }
@@ -42,6 +42,7 @@ app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDat
         }
 
         $scope.ShowActiveLocation = function (index, active) {
+            return;
             // go through all the filter items and set them to neutral
             for (var i = 0; i < $scope.numLocations; i++) {
                 document.getElementById("loc" + i).style.backgroundColor = "";
@@ -55,11 +56,13 @@ app.controller('JoynerApp_DeviceController', ['$scope', 'dataService', 'azureDat
         $scope.GetLocations = function () {
             var unique = {};
             $scope.locationList = [];
+            $scope.locationList.push("All");
             console.log("Device Table Length: " + $scope.devices.length);
             for (var i = 0; i < $scope.devices.length; i++) {
                 if (typeof unique[$scope.devices[i]["network"]] == "undefined") {
                     unique[$scope.devices[i]["network"]] = "";
-                    $scope.locationList.push($scope.devices[i]);
+                    //$scope.locationList.push($scope.devices[i]);
+                    $scope.locationList.push($scope.devices[i].network);
                     $scope.numLocations = $scope.locationList.length;
                     console.log("There are " + $scope.numLocations + " locations.")
                 }

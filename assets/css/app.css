@@ -299,3 +299,35 @@ form.navbar-form.navbar-right.ng-pristine.ng-valid {
 
     height: 100%;
 }
+
+.locationBtn {
+  text-align:left;
+  color: #fff;
+  height:100%;
+  width:100%;
+  background-color: #2b3741;
+  padding: 10px 15px;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 1.4;
+  border: none;
+  border-radius: 4px;
+  -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+          transition: border .25s linear, color .25s linear, background-color .25s linear;
+
+  -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+.locationBtn:hover,
+.locationBtn:focus,
+.locationBtn.active {
+  background-color: rgba(0,0,0,.7);
+  color: #1abc9c;
+  border-color: #cacfd2;
+  }
+
+.btn-group-vertical {
+    width: 100%;
+}
+
+

@@ -2,11 +2,11 @@
 <html ng-app="JoynerApp">
 <head>
     <title>Joyner Devices</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
+
     <link href="assets/css/flat-ui.css" rel="stylesheet">
     <link rel="shortcut icon" href="assets/img/favicon.ico">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" data-require="bootstrap-css@3.1.1" data-semver="3.1.1" />
-    <link href="assets/css/vendor/bootstrapOverride.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
 
     <script src="https://code.jquery.com/jquery-2.0.3.min.js" data-require="jquery@*" data-semver="2.0.3"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" data-require="bootstrap@3.1.1" data-semver="3.1.1"></script>
@@ -47,13 +47,12 @@
                     </div>
                     <div id="collapseTwo" class="accordion-body collapse" style="height: 0px; ">
                         <div class="accordion-inner">
-                            <ul>
-                                <div ng-repeat="device in devices | unique:'network' | orderBy:directionalSort"class="locationList">
-                                   <li> 
-                                       <button type="button" class="btn btn-link" id="loc{{$index}}" ng-click="FilterLocation(device.network, $index)">{{device.network}}</button>
-                                   </li> 
+                            <div class="btn-group-vertical">
+                                <!--<div ng-repeat="device in devices | unique:'network' | orderBy:directionalSort" class="locationList">-->
+                                <div ng-repeat="location in locationList" class="locationList">
+                                    <button class="locationBtn" type="button" id="loc{{$index}}" ng-click="FilterLocation(location, $index)">{{location}}</button>
                                 </div>
-                            </ul>
+                             </div>
                         </div>
                     </div>
                 </div>
